@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <style>
+        #chart {
+            width: 100%;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+<div id="chart"></div>
+<script>
+    var chart = echarts.init(document.getElementById('chart'));
+
+    var option = {
+        title: {
+            text: 'Nivel del Río',
+            subtext: 'Datos por fecha'
+        },
+        xAxis: {
+            type: 'category',
+            data: ['2024-10-01', '2024-10-02', '2024-10-03', '2024-10-04']
+        },
+        yAxis: {
+            type: 'value',
+            name: 'Nivel (m)'
+        },
+        series: [{
+            data: [3.2, 2.8, 4.1, 3.5],
+            type: 'line',
+            smooth: true,
+            areaStyle: {}
+        }]
+    };
+
+    chart.setOption(option);
+</script>
+</body>
+</html>

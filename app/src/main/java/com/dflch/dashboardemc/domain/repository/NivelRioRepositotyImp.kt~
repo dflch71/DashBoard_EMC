@@ -1,0 +1,14 @@
+package com.dflch.dashboardemc.domain.repository
+
+import com.dflch.dashboardemc.data.remote.api.nivelrio.NivelRioApiService
+import com.dflch.dashboardemc.data.remote.mappers.toDomainModel
+import com.dflch.dashboardemc.domain.model.nivelrio.NivelRio
+import javax.inject.Inject
+
+class NivelRioRepositotyImp @Inject constructor(
+    private val apiNivelRio: NivelRioApiService
+) : NivelRioRepository {
+    override suspend fun getNivelRio(): List<NivelRio> {
+        return apiNivelRio.getNivelRio().map { it.toDomainModel() }
+    }
+}
