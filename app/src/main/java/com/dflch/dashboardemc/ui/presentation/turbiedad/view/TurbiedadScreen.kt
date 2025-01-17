@@ -1,30 +1,21 @@
 package com.dflch.dashboardemc.ui.presentation.turbiedad.view
 
 import android.icu.lang.UCharacter.toUpperCase
-import androidx.compose.animation.core.EaseInOutCubic
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -35,50 +26,46 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.DialogProperties
-import com.dflch.dashboardemc.R
-import com.dflch.dashboardemc.core.utils.Utility.Companion.extractDateDay
+import androidx.navigation.NavController
 import com.dflch.dashboardemc.core.utils.Utility.Companion.extractDateTimeParts
-import com.dflch.dashboardemc.core.utils.Utility.Companion.extractTimeAmPm
 import com.dflch.dashboardemc.domain.model.nivelrio.LecturasPlantas
+import com.dflch.dashboardemc.ui.presentation.nivelRio.view.component.AlertDialogNivelRio
+import com.dflch.dashboardemc.ui.presentation.nivelRio.viewmodel.UiState
+import com.dflch.dashboardemc.ui.presentation.turbiedad.view.component.TurbiedadGrafMenu
 import com.dflch.dashboardemc.ui.presentation.turbiedad.viewModel.TurbiedadViewModel
-import com.dflch.dashboardemc.ui.presentation.turbiedad.viewModel.UiState
-import ir.ehsannarmani.compose_charts.ColumnChart
-import ir.ehsannarmani.compose_charts.LineChart
-import ir.ehsannarmani.compose_charts.models.AnimationMode
-import ir.ehsannarmani.compose_charts.models.BarProperties
-import ir.ehsannarmani.compose_charts.models.Bars
-import ir.ehsannarmani.compose_charts.models.DotProperties
-import ir.ehsannarmani.compose_charts.models.DrawStyle
-import ir.ehsannarmani.compose_charts.models.GridProperties
-import ir.ehsannarmani.compose_charts.models.LabelProperties
-import ir.ehsannarmani.compose_charts.models.Line
-import ir.ehsannarmani.compose_charts.models.PopupProperties
+import com.dflch.dashboardemc.ui.presentation.turbiedad.viewModel.UiStateP1
+import com.dflch.dashboardemc.ui.presentation.turbiedad.viewModel.UiStateP2
 import kotlinx.coroutines.delay
 
 @Composable
 fun TurbiedadScreen(
-    turbiedadViewModel : TurbiedadViewModel
+    turbiedadViewModel : TurbiedadViewModel,
+    navController: NavController
 ) {
-    val uiState by turbiedadViewModel.uiState.collectAsState()
-    var isChangeGraph by remember { mutableStateOf(false) }
+    val uiStateP1 by turbiedadViewModel.uiStateP1.collectAsState()
+    val uiStateP2 by turbiedadViewModel.uiStateP2.collectAsState()
+
+    var turbiedadP1: List<LecturasPlantas> by remember { mutableStateOf(emptyList()) }
+    var turbiedadP2: List<LecturasPlantas> by remember { mutableStateOf(emptyList()) }
+
+    var isErrorMsg by remember { mutableStateOf(false) }
+    var msgError by remember { mutableStateOf("") }
 
     // Actualiza los datos cada 60 segundos
     LaunchedEffect(Unit) {
         while (true) {
             turbiedadViewModel.refreshDataTurbiedadP1()
-            delay(300000L) // Actualiza cada 60 segundos
+            turbiedadViewModel.refreshDataTurbiedadP2()
+            delay(900000L) // Actualiza cada 120 segundos
         }
     }
 
-    when (uiState) {
-        is UiState.Loading -> {
+    when (uiStateP1) {
+        is UiStateP1.Loading -> {
             Box(
                 modifier = Modifier
                     .fillMaxSize(),
@@ -87,387 +74,280 @@ fun TurbiedadScreen(
                 CircularProgressIndicator()
             }
         }
-        is UiState.Success -> {
-            val turbiedadP1 = (uiState as UiState.Success<List<LecturasPlantas>>).data
-            // Muestra la lista de turbiedad planta 1
-            Box(modifier = Modifier.fillMaxSize()) {
-                if (turbiedadP1.isNotEmpty()) {
-                    Column {
-                        Box(
-                            modifier = Modifier.weight(0.12f)
-                        ) {
-                            Row {
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .weight(0.85f)
-                                ) {
-                                    Text(
-                                        text = "Turbiedad Planta 01 (UNT)",
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(2.dp),
-                                        style = MaterialTheme.typography.bodyLarge,
-                                        color = Color.Black,
-                                        textAlign = TextAlign.Center
-                                    )
 
-                                    Text(
-                                        text = toUpperCase("${turbiedadP1[0].fecha} - ${turbiedadP1[turbiedadP1.size - 1].fecha}"),
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(2.dp),
-                                        style = MaterialTheme.typography.labelMedium,
-                                        color = Color.Black,
-                                        textAlign = TextAlign.Center
-                                    )
-                                }
+        is UiStateP1.Success -> {
+            turbiedadP1 = (uiStateP1 as UiStateP1.Success<List<LecturasPlantas>>).data
+        }
 
-                                IconButton(
-                                    onClick = { isChangeGraph = !isChangeGraph },
-                                    modifier = Modifier
-                                        .weight(0.15f),
-                                    colors = IconButtonDefaults.iconButtonColors(
-                                        containerColor = Color.LightGray,
-                                        contentColor = Color.Black
-                                    )
-                                ) {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.ic_chart_outlined),
-                                        contentDescription = null
-                                    )
-                                }
-                            }
-                        }
+        is UiStateP1.Error -> {
+            //val errorMessage = (uiStateP1 as UiStateP1.Error).message
+            //Text(text = "Error: $errorMessage", color = Color.Red)
+            msgError = (uiStateP1 as UiState.Error).message
+            isErrorMsg = true
+        }
+    }
 
-                        Box(
-                            modifier = Modifier
-                                .weight(0.20f)
-                                .fillMaxWidth()
-                        ) {
-                            Row(
-                                modifier = Modifier.padding(4.dp)
-                            ) {
-                                val turbiedadP1Unicos = turbiedadP1.distinctBy { it.fecha }
-                                TurbiedadContent(turbiedadP1Unicos)
-                            }
-                        }
-
-                        Box(modifier = Modifier.weight(1.0f)) {
-                            if (isChangeGraph) {
-                                TurbiedadGrafColumn(turbiedadP1)
-                            } else {
-                                TurbiedadGraf(turbiedadP1)
-                            }
-                        }
-                    }
-                    } else {
-                        AlertDialogTurbiedad(turbiedadViewModel)
-                    }
-
+    when (uiStateP2) {
+        is UiStateP2.Loading -> {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
             }
         }
-        is UiState.Error -> {
-            val errorMessage = (uiState as UiState.Error).message
-            Text(text = "Error: $errorMessage", color = Color.Red)
+
+        is UiStateP2.Success -> {
+            turbiedadP2 = (uiStateP2 as UiStateP2.Success<List<LecturasPlantas>>).data
         }
+
+        is UiStateP2.Error -> {
+            //val errorMessage = (uiStateP2 as UiStateP2.Error).message
+            //Text(text = "Error: $errorMessage", color = Color.Red)
+            msgError = (uiStateP2 as UiState.Error).message
+            isErrorMsg = true
+        }
+
     }
-}
 
-@Composable
-fun AlertDialogTurbiedad(viewModel: TurbiedadViewModel) {
-    val openDialog = remember { mutableStateOf(true) }
-
-    if (openDialog.value) {
-        AlertDialog(
-            onDismissRequest = {
-                openDialog.value = false
-            },
-            title = {
-                Text(text = "Error Cargando Información")
-            },
-            text = {
-                Text(
-                    "- No hay datos disponibles \n" +
-                         "- Verifar la conexión a internet"
-                )
-            },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        viewModel.refreshDataTurbiedadP1()
-                        openDialog.value = false
-                    }
-                ) {
-                    Text("Aceptar")
-                }
-            },
-
-            dismissButton = {
-                TextButton(
-                    onClick = {
-                        openDialog.value = false
-                    }
-                ) {
-                    Text("Salir")
-                }
-            },
-
-            properties = DialogProperties(
-                dismissOnBackPress = false,
-                dismissOnClickOutside = false
-            )
+    if (isErrorMsg) {
+        Text(
+            text = msgError,
+            color = Color.Red,
+            modifier = Modifier.padding(14.dp),
+            style = MaterialTheme.typography.labelLarge,
+            textAlign = TextAlign.Center
         )
+        return
     }
+
+    if (turbiedadP1.isNullOrEmpty()) {
+        turbiedadP1 = emptyList()
+        Text(text = "No hay datos disponibles para la planta 1", color = Color.Red)
+    }
+
+    if (turbiedadP2.isNullOrEmpty()) {
+        turbiedadP2 = emptyList()
+        Text(text = "No hay datos disponibles para la planta 2", color = Color.Red)
+    }
+
+
+    TurbiedadPlantas(
+        turbiedadP1,
+        turbiedadP2,
+        onClickP1 = { navController.navigate("turbiedad_planta01_screen") },
+        onClickP2 = { navController.navigate("turbiedad_planta02_screen") }
+    )
 }
 
 @Composable
-fun TurbiedadContent(turbiedadP1: List<LecturasPlantas>) {
-    LazyRow(
-        modifier = Modifier.fillMaxWidth(),
-        contentPadding = PaddingValues(horizontal = 10.dp),
-        horizontalArrangement = Arrangement.spacedBy(4.dp)
-    ) {
-        items(turbiedadP1) { turbiedad ->
-            TurbiedadItem(turbiedad)
-        }
-    }
-}
+fun TurbiedadPlantas(
+    turbiedadP1: List<LecturasPlantas>,
+    turbiedadP2: List<LecturasPlantas>,
+    onClickP1 : () -> Unit = {},
+    onClickP2 : () -> Unit = {},
+){
 
-@Composable
-fun TurbiedadItem(turbiedad: LecturasPlantas) {
+    // Actualiza los datos iniciales
+    var p1FechaDesde : String by remember { mutableStateOf("")}
+    var p1FechaHasta : String by remember { mutableStateOf("")}
+    var p2FechaDesde : String by remember { mutableStateOf("")}
+    var p2FechaHasta : String by remember { mutableStateOf("")}
+
+    var p1AguaCruda : String by remember { mutableStateOf("")}
+    var p1Tanques   : String by remember { mutableStateOf("")}
+    var p2AguaCruda : String by remember { mutableStateOf("")}
+    var p2Tanques   : String by remember { mutableStateOf("")}
+
+    p1FechaDesde = turbiedadP1[0].fecha
+    p1FechaHasta = turbiedadP1[turbiedadP1.size - 1].fecha
+    p1AguaCruda  = turbiedadP1[0].lectura.toString()
+    p1Tanques    = "0.0X" //Pendiente
+
+    p2FechaDesde = turbiedadP2[0].fecha
+    p2FechaHasta = turbiedadP2[turbiedadP2.size - 1].fecha
+    p2AguaCruda  = turbiedadP2[0].lectura.toString()
+    p2Tanques    = "0.0X" //Pendiente
+
     Column(
         modifier = Modifier
-            .width(90.dp)
-            .wrapContentHeight()
-            .background(
-                color = if (turbiedad.lectura < 4000) colorResource(id = R.color.purple_500) //Azul
-                else if (turbiedad.lectura in 4000.00..4999.00) Color.Yellow
-                else if (turbiedad.lectura in 5000.00..5999.00) Color(0xFFFFA500)
-                else Color.Red,
-                shape = RoundedCornerShape(15.dp)
-            )
-            .padding(2.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .fillMaxSize()
     ) {
-        Text(
-            text = turbiedad.lectura.toString(),
-            maxLines = 1,
-            fontSize = 14.sp,
-            color = if (turbiedad.lectura in 4000.00..4999.00) Color.Black else Color.White,
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center
-        )
+        Box(
+            modifier = Modifier
+                .weight(0.5f)
+                .fillMaxSize()
+        ) {
+            OutlinedCard(
+                modifier = Modifier
+                    .clickable{ onClickP1() }
+                    .fillMaxSize()
+                    .padding(2.dp),
 
-        val (datePart, timePart) = extractDateTimeParts(turbiedad.fecha) // Or extractDateTimePartsRegex(text)
+                shape = RoundedCornerShape(15.dp),
+            ) {
+                Column {
+                    titulo("Turbiedad Planta 01 (UNT)")
+                    tituloFecha(p1FechaDesde, p1FechaHasta)
+                    valoresTurbiedad(p1FechaDesde, p1AguaCruda, p1Tanques, turbiedadP1)
+                }
+            }
+        }
 
-        Text(
-            text = toUpperCase(datePart?.toString() ?: "Fecha"),
-            maxLines = 2,
-            fontSize = 10.sp,
-            color = if (turbiedad.lectura in 4000.00..4999.00) Color.Black else Color.White,
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center
-        )
-
-        Text(
-            text = timePart?.toString() ?: "Hora",
-            maxLines = 1,
-            fontSize = 10.sp,
-            color = if (turbiedad.lectura in 4000.00..4999.00) Color.Black else Color.White,
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center
-        )
-    }
-}
-
-@Composable
-fun TurbiedadGraf(turbiedadP1: List<LecturasPlantas>) {
-    var horas = mutableListOf<String>()
-    var turbiedadLectura = mutableListOf<Double>()
-    var horasLectura = 0
-    var lastHour = 0
-
-    for (turbiedad in turbiedadP1)  {
-        horasLectura++
-        if (horas.size >= 10) break
-
-        if (horasLectura < 30) {
-            if (horasLectura == 1) {
-                lastHour = turbiedad.hora
-                horas.add(turbiedad.hora.toString())
-                turbiedadLectura.add(turbiedad.lectura)
-            } else {
-                if (lastHour != turbiedad.hora) {
-                    lastHour = turbiedad.hora
-                    horas.add(turbiedad.hora.toString())
-                    turbiedadLectura.add(turbiedad.lectura)
+        Box(
+            modifier = Modifier
+                .weight(0.5f)
+                .fillMaxSize()
+        ) {
+            OutlinedCard(
+                modifier = Modifier
+                    .clickable{  onClickP2() }
+                    .fillMaxSize()
+                    .padding(2.dp),
+                shape = RoundedCornerShape(15.dp),
+            ) {
+                Column {
+                    titulo("Turbiedad Planta 02 (UNT)")
+                    tituloFecha(p2FechaDesde, p2FechaHasta)
+                    valoresTurbiedad(p2FechaDesde, p2AguaCruda, p2Tanques, turbiedadP2)
                 }
             }
         }
     }
+}
 
-    Box(
+@Composable
+private fun valoresTurbiedad(
+    FechaDesde: String,
+    AguaCruda: String,
+    Tanques: String,
+    turbiedadList: List<LecturasPlantas>
+) {
+    Row(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
+            .padding(4.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+
     ) {
-        LineChart(
-            labelProperties = LabelProperties(
-                enabled = true,
-                labels = horas.reversed()
-            ),
+        Column(
+            modifier = Modifier.weight(0.4f),
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            ElevatedCard(
+                modifier = Modifier
+                    .weight(0.5f)
+                    .fillMaxHeight()
+                    .padding(8.dp)
+            ) {
+
+                Column {
+                    subTitulo("Agua Cruda")
+                    datePart(FechaDesde)
+                    Text(
+                        text = AguaCruda,
+                        modifier = Modifier.fillMaxWidth(),
+                        style = MaterialTheme.typography.displaySmall,
+                        color = Color.Gray,
+                        textAlign = TextAlign.Center,
+                        maxLines = 1,
+                        softWrap = false, // Evita que el texto se envuelva en varias líneas
+                        overflow = TextOverflow.Clip // No muestra "..." si no cabe
+                    )
+                }
+            }
+
+            ElevatedCard(
+                modifier = Modifier
+                    .weight(0.5f)
+                    .fillMaxHeight()
+                    .padding(8.dp)
+            ) {
+                Column {
+                    subTitulo("Tanques Almacenamiento")
+                    datePart(FechaDesde)
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 4.dp, end = 4.dp),
+                        text = Tanques,
+                        style = MaterialTheme.typography.displaySmall,
+                        color = Color.Gray,
+                        textAlign = TextAlign.Center,
+                        maxLines = 1,
+                        softWrap = false, // Evita que el texto se envuelva en varias líneas
+                        overflow = TextOverflow.Clip // No muestra "..." si no cabe
+                    )
+                }
+            }
+        }
+        Box(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 22.dp),
-            data = remember {
-                listOf(
-                    Line(
-                        label = "Roja (6000+)", //909.50
-                        values = listOf(0.0),
-                        color = SolidColor(Color.Red),
-                        //firstGradientFillColor = Color(0xFF2BC0A1).copy(alpha = .5f),
-                        //drawStyle = DrawStyle.Stroke(width = 2.dp)
-                    ),
-
-                    Line(
-                        label = "Naranja (5000)", //908.52 - 909.49
-                        values = listOf(0.0),
-                        color =  SolidColor(Color(0xFFFFA500)),
-                        //firstGradientFillColor = Color(0xFF2BC0A1).copy(alpha = .5f),
-                        //drawStyle = DrawStyle.Stroke(width = 2.dp)
-                    ),
-
-                    Line(
-                        label = "Amarilla (4000)", //4000.00 - 4999.99
-                        values = listOf(0.0),
-                        color = SolidColor(Color.Yellow),
-                        //firstGradientFillColor = Color(0xFF2BC0A1).copy(alpha = .5f),
-                        //drawStyle = DrawStyle.Stroke(width = 2.dp)
-                    ),
-
-                    Line(
-                        label = "Turbiedad UNT",
-                        values = turbiedadLectura.reversed(),
-                        color = SolidColor(Color(0xFF2596be)),
-                        firstGradientFillColor = Color(0xFF2596be).copy(alpha = .5f),
-                        secondGradientFillColor = Color.Transparent,
-                        strokeAnimationSpec = tween(2000, easing = EaseInOutCubic),
-                        gradientAnimationDelay = 1000,
-                        drawStyle = DrawStyle.Stroke(width = 2.dp),
-                        dotProperties = DotProperties(
-                            enabled = true,
-                            color = SolidColor(Color.White),
-                            strokeWidth = 2.dp,
-                            radius = 4.dp,
-                            strokeColor = SolidColor(Color.LightGray),
-                        )
-                    ),
-                )
-            },
-            
-            animationMode = AnimationMode.Together(delayBuilder = { it * 500L }),
-            popupProperties = PopupProperties(
-                enabled = true,
-                animationSpec = tween(300),
-                duration = 2000L,
-                textStyle = MaterialTheme.typography.labelSmall,
-                containerColor = Color.White,
-                cornerRadius = 8.dp,
-                contentHorizontalPadding = 4.dp,
-                contentVerticalPadding = 2.dp,
-                contentBuilder = { value-> "%.2f".format(value)+" UNT" }
-            ),
-
-            gridProperties = GridProperties(
-                xAxisProperties = GridProperties.AxisProperties(
-                    enabled = true,
-                    thickness = 0.3.dp,
-                    lineCount = 5,
-                    color = SolidColor(Color.LightGray)
-                )
-            )
-        )
+                .weight(0.6f)
+                .padding(4.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            TurbiedadGrafMenu(turbiedadList)
+        }
     }
 }
 
 @Composable
-fun TurbiedadGrafColumn(turbiedadP1: List<LecturasPlantas>) {
-    var horas = mutableListOf<String>()
-    var turbiedadLectura = mutableListOf<Double>()
-
-
-    horas.add(extractTimeAmPm(turbiedadP1[0].fecha)+" "+turbiedadP1[0].lectura.toString()+" UNT")
-    turbiedadLectura.add(turbiedadP1[0].lectura)
-
-    Box(
+private fun titulo(muestra: String) {
+    Text(
+        text = muestra,
         modifier = Modifier
-            .fillMaxSize()
-    ) {
-        ColumnChart(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 22.dp),
-            data = remember {
-                listOf(
-                    Bars(
-                        label = "Turbiedad: ${horas[0]}",
-                        values = listOf(
-                            Bars.Data(
-                                label = "Roja (6000+)",
-                                value = 6000.00,
-                                color = SolidColor(Color.Red)
-                            ),
-                            Bars.Data(
-                                label = "Naranja (5000)",
-                                value = 5000.00,
-                                color = SolidColor(Color(0xFFFFA500))
-                            ),
-                            Bars.Data(
-                                label = "Amarilla (4000)",
-                                value = 4000.00,
-                                color = SolidColor(Color.Yellow)
-                            ),
-                            Bars.Data(
-                                label = horas[horas.size-1],
-                                value = turbiedadLectura[horas.size-1],
-                                color = SolidColor(Color(0xFF2596be))
-                            ),
-
-                        ),
-                    )
-                )
-            },
-
-            barProperties = BarProperties(
-                spacing = 10.dp,
-                thickness = 20.dp,
-                cornerRadius = Bars.Data.Radius.Circular(5.dp),
-            ),
-
-            animationMode = AnimationMode.Together(delayBuilder = { it * 500L }),
-
-            popupProperties = PopupProperties(
-                enabled = true,
-                animationSpec = tween(300),
-                duration = 2000L,
-                textStyle = MaterialTheme.typography.labelSmall,
-                containerColor = Color.White,
-                cornerRadius = 8.dp,
-                contentHorizontalPadding = 4.dp,
-                contentVerticalPadding = 2.dp,
-                contentBuilder = { value-> "%.2f".format(value)+" UNT" }
-            ),
-
-            gridProperties = GridProperties(
-                xAxisProperties = GridProperties.AxisProperties(
-                    enabled = false,
-                    thickness = 0.3.dp,
-                    lineCount = 5,
-                    color = SolidColor(Color.LightGray)
-                )
-            )
-        )
-    }
-
+            .fillMaxWidth()
+            .padding(4.dp),
+        style = MaterialTheme.typography.bodyLarge,
+        color = Color.Black,
+        textAlign = TextAlign.Center,
+        maxLines = 1,
+        softWrap = false,
+        overflow = TextOverflow.Clip
+    )
 }
+
+@Composable
+private fun tituloFecha(fecha01: String, fecha02: String)  {
+    Text(
+        text = toUpperCase("${fecha01} - ${fecha02}"),
+        modifier = Modifier.fillMaxWidth(),
+        style = MaterialTheme.typography.labelMedium,
+        color = Color.Black,
+        textAlign = TextAlign.Center
+    )
+}
+
+@Composable
+private fun subTitulo(Lugar: String)  {
+    Text(
+        text = Lugar,
+        modifier = Modifier.fillMaxWidth(),
+        style = MaterialTheme.typography.labelMedium,
+        color = Color.Black,
+        textAlign = TextAlign.Center,
+        maxLines = 2,
+        overflow = TextOverflow.Clip,
+    )
+}
+
+@Composable
+private fun datePart(fecha: String){
+    val (datePart, timePart) = extractDateTimeParts(fecha) // Or extractDateTimePartsRegex(text)
+    val fechaHora = "$datePart $timePart"
+    Text(
+        text = fechaHora,
+        maxLines = 1,
+        fontSize = 10.sp,
+        modifier = Modifier.fillMaxWidth(),
+        textAlign = TextAlign.Center
+    )
+}
+
+
+
+
+
 

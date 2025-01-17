@@ -39,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.dflch.dashboardemc.R
 import com.dflch.dashboardemc.ui.components.BottomNavigationBar
 import com.dflch.dashboardemc.ui.presentation.niveltanque.view.NivelTanqueScreen
@@ -59,6 +60,7 @@ fun HomeScreen(
     turbiedadViewModel: TurbiedadViewModel,
     nivelTanqueViewModel: NivelTanqueViewModel,
     //ircaViewModel: IrcaViewModel
+    navController: NavHostController
 ) {
 
     val isNetworkAvailable by networkViewModel.networkStatus.collectAsState()
@@ -117,7 +119,7 @@ fun HomeScreen(
             ) {
                 when (selectedItemIndex) {
                     0 -> { NivelRioScreen(nivelRioViewModel) }
-                    1 -> { TurbiedadScreen(turbiedadViewModel) }
+                    1 -> { TurbiedadScreen(turbiedadViewModel, navController) }
                     2 -> { NivelTanqueScreen(nivelTanqueViewModel) }
                     3 -> { IrcaScreen() }
                 }

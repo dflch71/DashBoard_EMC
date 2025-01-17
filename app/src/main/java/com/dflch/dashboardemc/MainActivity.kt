@@ -25,6 +25,8 @@ class MainActivity : ComponentActivity(
     private val networkViewModel: NetworkViewModel by viewModels()
     private val nivelRioViewModel: NivelRioViewModel by viewModels()
     private val turbiedadViewModel: TurbiedadViewModel by viewModels()
+    private val turbiedadPlanta01ViewModel: TurbiedadViewModel by viewModels()
+    private val turbiedadPlanta02ViewModel: TurbiedadViewModel by viewModels()
     private val nivelTanqueViewModel: NivelTanqueViewModel by viewModels()
     //private val ircaViewModel: IrcaViewModel by viewModels()
 
@@ -41,6 +43,8 @@ class MainActivity : ComponentActivity(
                     networkViewModel,
                     nivelRioViewModel,
                     turbiedadViewModel,
+                    turbiedadPlanta01ViewModel,
+                    turbiedadPlanta02ViewModel,
                     nivelTanqueViewModel
                 )
             }

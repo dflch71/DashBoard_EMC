@@ -18,8 +18,11 @@ class TurbiedadViewModel @Inject constructor(
 ): ViewModel() {
 
 
-    private val _uiState = MutableStateFlow<UiState<List<LecturasPlantas>>>(UiState.Loading)
-    val uiState: StateFlow<UiState<List<LecturasPlantas>>> = _uiState
+    private val _uiStateP1 = MutableStateFlow<UiStateP1<List<LecturasPlantas>>>(UiStateP1.Loading)
+    val uiStateP1: StateFlow<UiStateP1<List<LecturasPlantas>>> = _uiStateP1
+
+    private val _uiStateP2 = MutableStateFlow<UiStateP2<List<LecturasPlantas>>>(UiStateP2.Loading)
+    val uiStateP2: StateFlow<UiStateP2<List<LecturasPlantas>>> = _uiStateP2
 
     init {
         fetchTurbiedadP1()
@@ -28,45 +31,63 @@ class TurbiedadViewModel @Inject constructor(
 
     private fun fetchTurbiedadP1() {
         viewModelScope.launch {
-            _uiState.value = UiState.Loading
+            _uiStateP1.value = UiStateP1.Loading
             val result = getTurbiedadP1UseCase()
-            _uiState.value = when {
-                result.isSuccess -> UiState.Success(result.getOrNull() ?: emptyList())
-                result.isFailure -> UiState.Error(result.exceptionOrNull()?.message ?: "Error desconocido")
-                else ->  UiState.Error("Error desconocido")
+            _uiStateP1.value = when {
+                result.isSuccess -> UiStateP1.Success(result.getOrNull() ?: emptyList())
+                result.isFailure -> UiStateP1.Error(result.exceptionOrNull()?.message ?: "Error desconocido")
+                else ->  UiStateP1.Error("Error desconocido")
             }
         }
     }
 
     private fun fetchTurbiedadP2() {
         viewModelScope.launch {
-            _uiState.value = UiState.Loading
+            _uiStateP2.value = UiStateP2.Loading
             val result = getTurbiedadP2UseCase()
-            _uiState.value = when {
-                result.isSuccess -> UiState.Success(result.getOrNull() ?: emptyList())
-                result.isFailure -> UiState.Error(result.exceptionOrNull()?.message ?: "Error desconocido")
-                else ->  UiState.Error("Error desconocido")
+            _uiStateP2.value = when {
+                result.isSuccess -> UiStateP2.Success(result.getOrNull() ?: emptyList())
+                result.isFailure -> UiStateP2.Error(result.exceptionOrNull()?.message ?: "Error desconocido")
+                else ->  UiStateP2.Error("Error desconocido")
             }
         }
     }
 
     fun refreshDataTurbiedadP1() {
         viewModelScope.launch {
-            _uiState.value = UiState.Loading
+            _uiStateP1.value = UiStateP1.Loading
             try {
                 val data = getTurbiedadP1UseCase()
-                _uiState.value = UiState.Success(data.getOrNull() ?: emptyList())
+                _uiStateP1.value = UiStateP1.Success(data.getOrNull() ?: emptyList())
             } catch (e: Exception) {
-                _uiState.value = UiState.Error(e.message ?: "Error desconocido")
+                _uiStateP1.value = UiStateP1.Error(e.message ?: "Error desconocido")
+            }
+        }
+    }
+
+    fun refreshDataTurbiedadP2() {
+        viewModelScope.launch {
+            _uiStateP2.value = UiStateP2.Loading
+            try {
+                val data = getTurbiedadP2UseCase()
+                _uiStateP2.value = UiStateP2.Success(data.getOrNull() ?: emptyList())
+            } catch (e: Exception) {
+                _uiStateP2.value = UiStateP2.Error(e.message ?: "Error desconocido")
             }
         }
     }
 }
 
-sealed class UiState<out T> {
-    object Loading : UiState<Nothing>()
-    data class Success<T>(val data: T) : UiState<T>()
-    data class Error(val message: String) : UiState<Nothing>()
+sealed class UiStateP1<out T> {
+    object Loading : UiStateP1<Nothing>()
+    data class Success<T>(val data: T) : UiStateP1<T>()
+    data class Error(val message: String) : UiStateP1<Nothing>()
+}
+
+sealed class UiStateP2<out T> {
+    object Loading : UiStateP2<Nothing>()
+    data class Success<T>(val data: T) : UiStateP2<T>()
+    data class Error(val message: String) : UiStateP2<Nothing>()
 }
 
 
