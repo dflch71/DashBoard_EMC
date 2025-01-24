@@ -49,6 +49,7 @@ import com.dflch.dashboardemc.ui.presentation.nivelRio.view.NivelRioScreen
 import com.dflch.dashboardemc.ui.presentation.nivelRio.viewmodel.NivelRioViewModel
 import com.dflch.dashboardemc.ui.presentation.niveltanque.viewModel.NivelTanqueViewModel
 import com.dflch.dashboardemc.ui.presentation.turbiedad.view.TurbiedadScreen
+import com.dflch.dashboardemc.ui.presentation.turbiedad.viewModel.TurbiedadTanquesViewModel
 import com.dflch.dashboardemc.ui.presentation.turbiedad.viewModel.TurbiedadViewModel
 import kotlinx.coroutines.launch
 
@@ -58,6 +59,7 @@ fun HomeScreen(
     networkViewModel: NetworkViewModel,
     nivelRioViewModel: NivelRioViewModel,
     turbiedadViewModel: TurbiedadViewModel,
+    turbiedadTanquesViewModel: TurbiedadTanquesViewModel,
     nivelTanqueViewModel: NivelTanqueViewModel,
     //ircaViewModel: IrcaViewModel
     navController: NavHostController
@@ -119,7 +121,7 @@ fun HomeScreen(
             ) {
                 when (selectedItemIndex) {
                     0 -> { NivelRioScreen(nivelRioViewModel) }
-                    1 -> { TurbiedadScreen(turbiedadViewModel, navController) }
+                    1 -> { TurbiedadScreen(turbiedadViewModel, turbiedadTanquesViewModel, navController) }
                     2 -> { NivelTanqueScreen(nivelTanqueViewModel) }
                     3 -> { IrcaScreen() }
                 }

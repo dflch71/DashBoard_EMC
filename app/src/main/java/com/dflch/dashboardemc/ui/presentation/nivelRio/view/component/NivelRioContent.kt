@@ -14,7 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.dflch.dashboardemc.core.utils.Utility.Companion.extractDateTimeParts
-import com.dflch.dashboardemc.domain.model.nivelrio.LecturasPlantas
+import com.dflch.dashboardemc.domain.model.lecturas.LecturasPlantas
 
 @Composable
 fun NivelRioContent(niveles: List<LecturasPlantas>) {
@@ -31,7 +31,7 @@ fun NivelRioContent(niveles: List<LecturasPlantas>) {
         contentPadding = PaddingValues(horizontal = 10.dp),
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-        items(niveles) { nivel ->
+        items(niveles.distinctBy { it.hora }) { nivel ->
             NivelRioItem(
                 nivel,
                 onClick = {

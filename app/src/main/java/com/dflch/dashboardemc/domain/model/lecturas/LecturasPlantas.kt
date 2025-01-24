@@ -1,4 +1,4 @@
-package com.dflch.dashboardemc.domain.model.nivelrio
+package com.dflch.dashboardemc.domain.model.lecturas
 
 //Presentacion datos Domain
 data class LecturasPlantas(

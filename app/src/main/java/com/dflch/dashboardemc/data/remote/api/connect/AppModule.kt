@@ -8,6 +8,8 @@ import com.dflch.dashboardemc.data.remote.api.niveltanque.NivelTanqueT1P2ApiServ
 import com.dflch.dashboardemc.data.remote.api.niveltanque.NivelTanqueT2P2ApiService
 import com.dflch.dashboardemc.data.remote.api.turbiedad.TurbiedadP1ApiService
 import com.dflch.dashboardemc.data.remote.api.turbiedad.TurbiedadP2ApiService
+import com.dflch.dashboardemc.data.remote.api.turbiedad.TurbiedadTanqueP1ApiService
+import com.dflch.dashboardemc.data.remote.api.turbiedad.TurbiedadTanqueP2ApiService
 import com.dflch.dashboardemc.domain.repository.nivelrio.NivelRioRepository
 import com.dflch.dashboardemc.domain.repository.nivelrio.NivelRioRepositoryImp
 import com.dflch.dashboardemc.domain.repository.niveltanque.NivelTanqueT1P1Repository
@@ -20,6 +22,10 @@ import com.dflch.dashboardemc.domain.repository.turbiedad.TurbiedadP1Repository
 import com.dflch.dashboardemc.domain.repository.turbiedad.TurbiedadP1RepositoryImp
 import com.dflch.dashboardemc.domain.repository.turbiedad.TurbiedadP2Repository
 import com.dflch.dashboardemc.domain.repository.turbiedad.TurbiedadP2RepositoryImp
+import com.dflch.dashboardemc.domain.repository.turbiedad.TurbiedadTanquesP1Repository
+import com.dflch.dashboardemc.domain.repository.turbiedad.TurbiedadTanquesP1RepositoryImp
+import com.dflch.dashboardemc.domain.repository.turbiedad.TurbiedadTanquesP2Repository
+import com.dflch.dashboardemc.domain.repository.turbiedad.TurbiedadTanquesP2RepositoryImp
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -76,8 +82,29 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideApiServiceTurbiedadP1(retrofit: Retrofit): TurbiedadP1ApiService = retrofit.create(
-        TurbiedadP1ApiService::class.java)
+    fun provideApiServiceTurbiedadP1(retrofit: Retrofit): TurbiedadP1ApiService = retrofit.create(TurbiedadP1ApiService::class.java)
+
+
+    @Provides
+    @Singleton
+    fun provideTurbiedadTanquesP1Repository(apiService: TurbiedadTanqueP1ApiService): TurbiedadTanquesP1Repository {
+        return TurbiedadTanquesP1RepositoryImp(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideApiServiceTurbiedadTanquesP1(retrofit: Retrofit): TurbiedadTanqueP1ApiService = retrofit.create(TurbiedadTanqueP1ApiService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideTurbiedadTanquesP2Repository(apiService: TurbiedadTanqueP2ApiService): TurbiedadTanquesP2Repository {
+        return TurbiedadTanquesP2RepositoryImp(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideApiServiceTurbiedadTanquesP2(retrofit: Retrofit): TurbiedadTanqueP2ApiService = retrofit.create(TurbiedadTanqueP2ApiService::class.java)
+
 
     @Provides
     @Singleton

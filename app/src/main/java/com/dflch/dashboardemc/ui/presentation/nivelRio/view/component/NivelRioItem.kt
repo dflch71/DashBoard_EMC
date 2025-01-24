@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dflch.dashboardemc.R
 import com.dflch.dashboardemc.core.utils.Utility.Companion.extractDateTimeParts
-import com.dflch.dashboardemc.domain.model.nivelrio.LecturasPlantas
+import com.dflch.dashboardemc.domain.model.lecturas.LecturasPlantas
 
 @Composable
 fun NivelRioItem(nivel: LecturasPlantas, onClick: () -> Unit = {}) {

@@ -1,6 +1,6 @@
 package com.dflch.dashboardemc.domain.usecases.niveltanque
 
-import com.dflch.dashboardemc.domain.model.nivelrio.LecturasPlantas
+import com.dflch.dashboardemc.domain.model.lecturas.LecturasPlantas
 import com.dflch.dashboardemc.domain.repository.niveltanque.NivelTanqueT1P1Repository
 import javax.inject.Inject
 

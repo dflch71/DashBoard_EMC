@@ -46,14 +46,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.dflch.dashboardemc.R
-import com.dflch.dashboardemc.domain.model.nivelrio.LecturasPlantas
+import com.dflch.dashboardemc.domain.model.lecturas.LecturasPlantas
 import com.dflch.dashboardemc.ui.components.CharType
-import com.dflch.dashboardemc.ui.presentation.nivelRio.viewmodel.UiState
 import com.dflch.dashboardemc.ui.presentation.turbiedad.view.component.AlertDialogTurbiedad
 import com.dflch.dashboardemc.ui.presentation.turbiedad.view.component.TurbiedadContent
 import com.dflch.dashboardemc.ui.presentation.turbiedad.view.component.TurbiedadGraf
 import com.dflch.dashboardemc.ui.presentation.turbiedad.view.component.TurbiedadGrafColumn
+import com.dflch.dashboardemc.ui.presentation.turbiedad.view.component.TurbiedadGraf_Plantas
 import com.dflch.dashboardemc.ui.presentation.turbiedad.viewModel.TurbiedadViewModel
+import com.dflch.dashboardemc.ui.presentation.turbiedad.viewModel.UiStateP1
 import com.dflch.dashboardemc.ui.presentation.turbiedad.viewModel.UiStateP2
 import kotlinx.coroutines.delay
 
@@ -65,6 +66,9 @@ fun TurbiedadPlanta02Screen(
 ) {
     val uiState by turbiedadViewModel.uiStateP2.collectAsState()
     var turbiedad: List<LecturasPlantas> by remember { mutableStateOf(emptyList()) }
+
+    val uiState_P1 by turbiedadViewModel.uiStateP1.collectAsState()
+    var turbiedad_P1: List<LecturasPlantas> by remember { mutableStateOf(emptyList()) }
 
 
     // Actualiza los datos cada 120 segundos
@@ -135,6 +139,18 @@ fun TurbiedadPlanta02Screen(
                         contentDescription = "Menu description",
                     )
                 }
+
+                IconButton(onClick = {
+                    selectedButton = "Column"
+                    selectedChart = CharType.Column
+                }
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_linear_scale),
+                        contentDescription = "Menu description",
+                    )
+                }
+
             })
         }
 
@@ -143,6 +159,27 @@ fun TurbiedadPlanta02Screen(
             .padding(innerPadding)
             .fillMaxSize()
         ) {
+            when (uiState_P1) {
+                is UiStateP1.Loading -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+
+                is UiStateP1.Success -> {
+                    turbiedad_P1 = (uiState_P1 as UiStateP1.Success<List<LecturasPlantas>>).data
+                }
+
+                is UiStateP1.Error -> {
+                    val errorMessage = (uiState_P1 as UiStateP1.Error).message
+                    Text(text = "Error: $errorMessage", color = Color.Red)
+                }
+            }
+
+
             when (uiState) {
                 is UiStateP2.Loading -> {
                     Box(
@@ -176,13 +213,11 @@ fun TurbiedadPlanta02Screen(
                                     //transitionSpec = { scaleIn(initialScale = 0.8f) + fadeIn() with scaleOut(targetScale = 1.2f) + fadeOut() }
                                 ) { selectedChart ->
                                     when (selectedChart) {
-                                        CharType.Line -> {
-                                            TurbiedadGraf(turbiedad)
-                                        }
+                                        CharType.Line -> { TurbiedadGraf(turbiedad) }
 
-                                        CharType.Bar -> {
-                                            TurbiedadGrafColumn(turbiedad)
-                                        }
+                                        CharType.Bar -> { TurbiedadGrafColumn(turbiedad) }
+
+                                        CharType.Column -> { TurbiedadGraf_Plantas( turbiedad_P1, turbiedad ) }
 
                                         else -> {}
                                     }

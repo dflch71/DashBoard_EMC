@@ -1,6 +1,7 @@
 package com.dflch.dashboardemc.ui.presentation.nivelRio.view
 
 import android.icu.lang.UCharacter.toUpperCase
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,7 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.dflch.dashboardemc.R
-import com.dflch.dashboardemc.domain.model.nivelrio.LecturasPlantas
+import com.dflch.dashboardemc.domain.model.lecturas.LecturasPlantas
 import com.dflch.dashboardemc.ui.presentation.nivelRio.view.component.AlertDialogNivelRio
 import com.dflch.dashboardemc.ui.presentation.nivelRio.view.component.NivelRioContent
 import com.dflch.dashboardemc.ui.presentation.nivelRio.view.component.NivelRioGraf
@@ -132,7 +133,11 @@ fun NivelRioScreen(
                             }
                         }
 
-                        Box(modifier = Modifier.weight(1.0f)) {
+                        Box(
+                            modifier = Modifier
+                                .weight(1.0f)
+                                .clickable(onClick = { isChangeGraph = !isChangeGraph })
+                        ){
                             if (isChangeGraph) { NivelRioGrafNivel(niveles) }
                             else { NivelRioGraf(niveles) }
                         }

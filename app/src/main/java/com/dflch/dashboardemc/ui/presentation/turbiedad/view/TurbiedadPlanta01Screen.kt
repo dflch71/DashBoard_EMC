@@ -46,14 +46,16 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.dflch.dashboardemc.R
-import com.dflch.dashboardemc.domain.model.nivelrio.LecturasPlantas
+import com.dflch.dashboardemc.domain.model.lecturas.LecturasPlantas
 import com.dflch.dashboardemc.ui.components.CharType
 import com.dflch.dashboardemc.ui.presentation.turbiedad.view.component.AlertDialogTurbiedad
 import com.dflch.dashboardemc.ui.presentation.turbiedad.view.component.TurbiedadContent
 import com.dflch.dashboardemc.ui.presentation.turbiedad.view.component.TurbiedadGraf
 import com.dflch.dashboardemc.ui.presentation.turbiedad.view.component.TurbiedadGrafColumn
+import com.dflch.dashboardemc.ui.presentation.turbiedad.view.component.TurbiedadGraf_Plantas
 import com.dflch.dashboardemc.ui.presentation.turbiedad.viewModel.TurbiedadViewModel
 import com.dflch.dashboardemc.ui.presentation.turbiedad.viewModel.UiStateP1
+import com.dflch.dashboardemc.ui.presentation.turbiedad.viewModel.UiStateP2
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
@@ -64,6 +66,9 @@ fun TurbiedadPlanta01Screen(
 ) {
     val uiState by turbiedadViewModel.uiStateP1.collectAsState()
     var turbiedad: List<LecturasPlantas> by remember { mutableStateOf(emptyList()) }
+
+    val uiState_P2 by turbiedadViewModel.uiStateP2.collectAsState()
+    var turbiedad_P2: List<LecturasPlantas> by remember { mutableStateOf(emptyList()) }
 
     // Actualiza los datos cada 120 segundos
     LaunchedEffect(Unit) {
@@ -133,6 +138,17 @@ fun TurbiedadPlanta01Screen(
                         contentDescription = "Menu description",
                     )
                 }
+
+                IconButton(onClick = {
+                    selectedButton = "Column"
+                    selectedChart = CharType.Column
+                }
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_linear_scale),
+                        contentDescription = "Menu description",
+                    )
+                }
             })
         }
 
@@ -141,6 +157,27 @@ fun TurbiedadPlanta01Screen(
             .padding(innerPadding)
             .fillMaxSize()
         ) {
+            when (uiState_P2) {
+                is UiStateP2.Loading -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+
+                is UiStateP2.Success -> {
+                    turbiedad_P2 = (uiState_P2 as UiStateP2.Success<List<LecturasPlantas>>).data
+                }
+
+                is UiStateP2.Error -> {
+                    val errorMessage = (uiState_P2 as UiStateP2.Error).message
+                    Text(text = "Error: $errorMessage", color = Color.Red)
+                }
+            }
+
+
             when (uiState) {
                 is UiStateP1.Loading -> {
                     Box(
@@ -174,15 +211,13 @@ fun TurbiedadPlanta01Screen(
                                     //transitionSpec = { scaleIn(initialScale = 0.8f) + fadeIn() with scaleOut(targetScale = 1.2f) + fadeOut() }
                                 ) { selectedChart ->
                                     when (selectedChart) {
-                                        CharType.Line -> {
-                                            TurbiedadGraf(turbiedad)
-                                        }
+                                        CharType.Line -> { TurbiedadGraf(turbiedad) }
 
-                                        CharType.Bar -> {
-                                            TurbiedadGrafColumn(turbiedad)
-                                        }
+                                        CharType.Bar -> { TurbiedadGrafColumn(turbiedad) }
 
-                                        else -> {}
+                                        CharType.Column -> { TurbiedadGraf_Plantas(turbiedad, turbiedad_P2) }
+
+                                        else -> {  }
                                     }
                                 }
                             }
@@ -205,7 +240,6 @@ private fun turbiedadPlanta01(
     turbiedadP1: List<LecturasPlantas>,
     turbiedadViewModel: TurbiedadViewModel
 ) {
-    //var isChangeGraph by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier
         .fillMaxSize()

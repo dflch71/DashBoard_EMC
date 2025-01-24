@@ -43,10 +43,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import com.dflch.dashboardemc.R
-import com.dflch.dashboardemc.core.utils.Utility.Companion.extractDateDay
 import com.dflch.dashboardemc.core.utils.Utility.Companion.extractDateTimeParts
-import com.dflch.dashboardemc.core.utils.Utility.Companion.extractTimeAmPm
-import com.dflch.dashboardemc.domain.model.nivelrio.LecturasPlantas
+import com.dflch.dashboardemc.domain.model.lecturas.LecturasPlantas
 import com.dflch.dashboardemc.ui.presentation.niveltanque.viewModel.NivelTanqueViewModel
 import com.dflch.dashboardemc.ui.presentation.niveltanque.viewModel.UiState
 import ir.ehsannarmani.compose_charts.LineChart
@@ -361,7 +359,7 @@ fun NivelTanqueT1P1Graf(nivelTanqueT1P1: List<LecturasPlantas>) {
                     ),
 
                     Line(
-                        label = "Naranja (<= 0.5 Mts)", //909.50
+                        label = "Alerta (0.5 Mts)", //909.50
                         values = listOf(0.5, 0.5, 0.5, 0.5),
                         color =  SolidColor(Color(0xFFFFA500)),
                         firstGradientFillColor = Color(0xFFFFCC80).copy(alpha = .7f),

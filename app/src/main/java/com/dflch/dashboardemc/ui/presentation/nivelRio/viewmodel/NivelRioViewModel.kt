@@ -2,7 +2,7 @@ package com.dflch.dashboardemc.ui.presentation.nivelRio.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dflch.dashboardemc.domain.model.nivelrio.LecturasPlantas
+import com.dflch.dashboardemc.domain.model.lecturas.LecturasPlantas
 import com.dflch.dashboardemc.domain.usecases.nivelrio.GetNivelRioStatusUseCase
 import com.dflch.dashboardemc.domain.usecases.nivelrio.GetNivelRioUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

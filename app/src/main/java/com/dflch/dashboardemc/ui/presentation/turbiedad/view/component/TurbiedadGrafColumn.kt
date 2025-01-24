@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
 import com.dflch.dashboardemc.core.utils.Utility.Companion.extractTimeAmPm
-import com.dflch.dashboardemc.domain.model.nivelrio.LecturasPlantas
+import com.dflch.dashboardemc.domain.model.lecturas.LecturasPlantas
 import ir.ehsannarmani.compose_charts.ColumnChart
 import ir.ehsannarmani.compose_charts.models.AnimationMode
 import ir.ehsannarmani.compose_charts.models.BarProperties
@@ -36,31 +36,43 @@ fun TurbiedadGrafColumn(turbiedadP1: List<LecturasPlantas>) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 22.dp),
-            data = remember {
-                listOf(
+            data = remember {                listOf(
+
                     Bars(
                         label = "Turbiedad: ${horas[0]}",
                         values = listOf(
+
+                            Bars.Data( value = 0.0, color = SolidColor(Color.Transparent)),
+                            Bars.Data( value = 0.0, color = SolidColor(Color.Transparent)),
+
                             Bars.Data(
-                                label = "Roja (6000+)",
-                                value = 6000.00,
-                                color = SolidColor(Color.Red)
+                                //label = horas[horas.size-1],
+                                label = turbiedadP1[0].lectura.toString()+" UNT",
+                                value = turbiedadLectura[horas.size-1],
+                                color = SolidColor(Color(0xFF2596be))
                             ),
-                            Bars.Data(
-                                label = "Naranja (5000)",
-                                value = 5000.00,
-                                color = SolidColor(Color(0xFFFFA500))
-                            ),
+
+                            Bars.Data( label ="         ", value = 0.0, color = SolidColor(Color.Transparent)),
+
                             Bars.Data(
                                 label = "Amarilla (4000)",
                                 value = 4000.00,
                                 color = SolidColor(Color.Yellow)
                             ),
+
                             Bars.Data(
-                                label = horas[horas.size-1],
-                                value = turbiedadLectura[horas.size-1],
-                                color = SolidColor(Color(0xFF2596be))
+                                label = "Naranja (5000)",
+                                value = 5000.00,
+                                color = SolidColor(Color(0xFFFFA500))
                             ),
+
+                            Bars.Data(
+                                label = "Roja (6000+)",
+                                value = 6000.00,
+                                color = SolidColor(Color.Red)
+                            ),
+
+
                         ),
                     )
                 )
@@ -88,7 +100,7 @@ fun TurbiedadGrafColumn(turbiedadP1: List<LecturasPlantas>) {
 
             gridProperties = GridProperties(
                 xAxisProperties = GridProperties.AxisProperties(
-                    enabled = false,
+                    enabled = true,
                     thickness = 0.3.dp,
                     lineCount = 5,
                     color = SolidColor(Color.LightGray)

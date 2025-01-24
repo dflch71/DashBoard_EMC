@@ -2,7 +2,7 @@ package com.dflch.dashboardemc.ui.presentation.turbiedad.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dflch.dashboardemc.domain.model.nivelrio.LecturasPlantas
+import com.dflch.dashboardemc.domain.model.lecturas.LecturasPlantas
 import com.dflch.dashboardemc.domain.usecases.turbiedad.GetTurbiedadP1UseCase
 import com.dflch.dashboardemc.domain.usecases.turbiedad.GetTurbiedadP2UseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

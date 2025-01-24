@@ -2,7 +2,7 @@ package com.dflch.dashboardemc.ui.presentation.niveltanque.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dflch.dashboardemc.domain.model.nivelrio.LecturasPlantas
+import com.dflch.dashboardemc.domain.model.lecturas.LecturasPlantas
 import com.dflch.dashboardemc.domain.usecases.niveltanque.GetNivelTanqueT1P1UseCase
 import com.dflch.dashboardemc.domain.usecases.niveltanque.GetNivelTanqueT1P2UseCase
 import com.dflch.dashboardemc.domain.usecases.niveltanque.GetNivelTanqueT2P2UseCase

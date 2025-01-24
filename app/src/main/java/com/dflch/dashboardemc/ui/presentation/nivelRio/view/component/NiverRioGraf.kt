@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
-import com.dflch.dashboardemc.domain.model.nivelrio.LecturasPlantas
+import com.dflch.dashboardemc.domain.model.lecturas.LecturasPlantas
 import ir.ehsannarmani.compose_charts.LineChart
 import ir.ehsannarmani.compose_charts.models.AnimationMode
 import ir.ehsannarmani.compose_charts.models.DotProperties
@@ -29,7 +29,7 @@ fun NivelRioGraf(niveles: List<LecturasPlantas>) {
     var horasLectura = 0
     var lastHour = 0
 
-    for (nivel in niveles) {
+    for (nivel in niveles.distinctBy { it.hora }) {
         horasLectura++
         if (horas.size >= 10) break
 

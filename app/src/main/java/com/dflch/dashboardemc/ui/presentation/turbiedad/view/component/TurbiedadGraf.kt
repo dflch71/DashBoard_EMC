@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
-import com.dflch.dashboardemc.domain.model.nivelrio.LecturasPlantas
+import com.dflch.dashboardemc.domain.model.lecturas.LecturasPlantas
 import ir.ehsannarmani.compose_charts.LineChart
 import ir.ehsannarmani.compose_charts.models.AnimationMode
 import ir.ehsannarmani.compose_charts.models.DotProperties
@@ -56,7 +56,7 @@ fun TurbiedadGraf(turbiedadP1: List<LecturasPlantas>) {
         LineChart(
             labelProperties = LabelProperties(
                 enabled = true,
-                labels = horas
+                labels = horas.reversed(),
             ),
             modifier = Modifier
                 .fillMaxSize()
@@ -89,7 +89,7 @@ fun TurbiedadGraf(turbiedadP1: List<LecturasPlantas>) {
 
                     Line(
                         label = "Turbiedad UNT",
-                        values = turbiedadLectura,
+                        values = turbiedadLectura.reversed(),
                         color = SolidColor(Color(0xFF2596be)),
                         firstGradientFillColor = Color(0xFF2596be).copy(alpha = .5f),
                         secondGradientFillColor = Color.Transparent,

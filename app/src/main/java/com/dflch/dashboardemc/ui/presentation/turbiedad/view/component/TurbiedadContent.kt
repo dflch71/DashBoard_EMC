@@ -8,7 +8,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.dflch.dashboardemc.domain.model.nivelrio.LecturasPlantas
+import com.dflch.dashboardemc.domain.model.lecturas.LecturasPlantas
 
 @Composable
 fun TurbiedadContent(turbiedadP1: List<LecturasPlantas>) {
@@ -17,7 +17,7 @@ fun TurbiedadContent(turbiedadP1: List<LecturasPlantas>) {
         contentPadding = PaddingValues(horizontal = 10.dp),
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-        items(turbiedadP1) { turbiedad ->
+        items(turbiedadP1.distinctBy { it.hora }) { turbiedad ->
             TurbiedadItem(turbiedad)
         }
     }

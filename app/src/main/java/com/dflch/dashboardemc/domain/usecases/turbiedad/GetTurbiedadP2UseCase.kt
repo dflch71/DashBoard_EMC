@@ -1,6 +1,6 @@
 package com.dflch.dashboardemc.domain.usecases.turbiedad
 
-import com.dflch.dashboardemc.domain.model.nivelrio.LecturasPlantas
+import com.dflch.dashboardemc.domain.model.lecturas.LecturasPlantas
 import com.dflch.dashboardemc.domain.repository.turbiedad.TurbiedadP2Repository
 import javax.inject.Inject
 

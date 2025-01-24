@@ -1,41 +1,28 @@
 package com.dflch.dashboardemc.ui.presentation.turbiedad.view.component
 
-import androidx.annotation.Nullable
-import androidx.compose.animation.core.EaseInOutCubic
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.dflch.dashboardemc.domain.model.nivelrio.LecturasPlantas
+import com.dflch.dashboardemc.domain.model.lecturas.LecturasPlantas
 import ir.ehsannarmani.compose_charts.ColumnChart
-import ir.ehsannarmani.compose_charts.LineChart
-import ir.ehsannarmani.compose_charts.models.AnimationMode
 import ir.ehsannarmani.compose_charts.models.BarProperties
 import ir.ehsannarmani.compose_charts.models.Bars
-import ir.ehsannarmani.compose_charts.models.DotProperties
-import ir.ehsannarmani.compose_charts.models.DrawStyle
 import ir.ehsannarmani.compose_charts.models.GridProperties
 import ir.ehsannarmani.compose_charts.models.HorizontalIndicatorProperties
-import ir.ehsannarmani.compose_charts.models.IndicatorPosition
 import ir.ehsannarmani.compose_charts.models.LabelProperties
-import ir.ehsannarmani.compose_charts.models.Line
-import ir.ehsannarmani.compose_charts.models.PopupProperties
-import ir.ehsannarmani.compose_charts.models.StrokeStyle
 
 @Composable
 fun TurbiedadGrafMenu(turbiedadP1: List<LecturasPlantas>) {
@@ -90,8 +77,9 @@ fun TurbiedadGrafMenu(turbiedadP1: List<LecturasPlantas>) {
             labelProperties = LabelProperties(
                 enabled = true,
                 forceRotation = true,
-                rotationDegreeOnSizeConflict = -360.0f,
-                textStyle = TextStyle(color = Color.Black, fontSize = 12.sp),
+                labels = horas.reversed(),
+                rotationDegreeOnSizeConflict = 0.0f,
+                textStyle = TextStyle(color = Color.Black, fontSize = 11.sp, textAlign = TextAlign.End),
             ),
 
             indicatorProperties = HorizontalIndicatorProperties(
@@ -100,34 +88,32 @@ fun TurbiedadGrafMenu(turbiedadP1: List<LecturasPlantas>) {
 
             data = remember {
                 listOf(
-
                     Bars(
-                        label = hora01,
-                        values = listOf(Bars.Data(value = turbiedad1, color = SolidColor(Color(0xFFE1BEE7)) ))
-                    ),
-                    Bars(
-                        label = hora02,
-                        values = listOf(Bars.Data(value = turbiedad2, color = SolidColor(Color(0xFFD1C4E9)) ))
-                    ),
-                    Bars(
-                        label = hora03,
-                        values = listOf(Bars.Data(value = turbiedad3, color = SolidColor(Color(0xFFC5CAE9)) ))
-                    ),
-                    Bars(
-                        label = hora04,
-                        values = listOf(Bars.Data(value = turbiedad4, color = SolidColor(Color(0xFFBBDEFB)) ))
+                        label = hora06,
+                        values = listOf(Bars.Data(value = turbiedad6, color = SolidColor(Color(0xFFe1bee7)) ))
                     ),
                     Bars(
                         label = hora05,
-                        values = listOf(Bars.Data(value = turbiedad5, color = SolidColor(Color(0xFFB3E5FC)) ))
+                        values = listOf(Bars.Data(value = turbiedad5, color = SolidColor(Color(0xFFce93d8)) ))
                     ),
                     Bars(
-                        label = hora06,
-                        values = listOf(Bars.Data(value = turbiedad6, color = SolidColor(Color(0xFFB2EBF2)) ))
+                        label = hora04,
+                        values = listOf(Bars.Data(value = turbiedad4, color = SolidColor(Color(0xFFba68c8)) ))
+                    ),
+                    Bars(
+                        label = hora03,
+                        values = listOf(Bars.Data(value = turbiedad3, color = SolidColor(Color(0xFFab47bc)) ))
+                    ),
+                    Bars(
+                        label = hora02,
+                        values = listOf(Bars.Data(value = turbiedad2, color = SolidColor(Color(0xFF9c27b0)) ))
+                    ),
+                    Bars(
+                        label = hora01,
+                        values = listOf(Bars.Data(value = turbiedad1, color = SolidColor(Color(0xFF6a1b9a)) ))
                     ),
                 )
             },
-
 
             barProperties = BarProperties(
                 cornerRadius =  Bars.Data.Radius.Rectangle(topRight = 6.dp, topLeft = 6.dp),

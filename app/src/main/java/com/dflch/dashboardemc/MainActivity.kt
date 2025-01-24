@@ -11,6 +11,7 @@ import com.dflch.dashboardemc.ui.container.ScreenContainer
 import com.dflch.dashboardemc.ui.presentation.network.viewmodel.NetworkViewModel
 import com.dflch.dashboardemc.ui.presentation.nivelRio.viewmodel.NivelRioViewModel
 import com.dflch.dashboardemc.ui.presentation.niveltanque.viewModel.NivelTanqueViewModel
+import com.dflch.dashboardemc.ui.presentation.turbiedad.viewModel.TurbiedadTanquesViewModel
 import com.dflch.dashboardemc.ui.presentation.turbiedad.viewModel.TurbiedadViewModel
 import com.dflch.dashboardemc.ui.theme.DashBoardEMCTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,8 +26,7 @@ class MainActivity : ComponentActivity(
     private val networkViewModel: NetworkViewModel by viewModels()
     private val nivelRioViewModel: NivelRioViewModel by viewModels()
     private val turbiedadViewModel: TurbiedadViewModel by viewModels()
-    private val turbiedadPlanta01ViewModel: TurbiedadViewModel by viewModels()
-    private val turbiedadPlanta02ViewModel: TurbiedadViewModel by viewModels()
+    private val turbiedadTanquesViewModel: TurbiedadTanquesViewModel by viewModels()
     private val nivelTanqueViewModel: NivelTanqueViewModel by viewModels()
     //private val ircaViewModel: IrcaViewModel by viewModels()
 
@@ -43,8 +43,7 @@ class MainActivity : ComponentActivity(
                     networkViewModel,
                     nivelRioViewModel,
                     turbiedadViewModel,
-                    turbiedadPlanta01ViewModel,
-                    turbiedadPlanta02ViewModel,
+                    turbiedadTanquesViewModel,
                     nivelTanqueViewModel
                 )
             }

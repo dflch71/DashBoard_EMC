@@ -14,6 +14,7 @@ import com.dflch.dashboardemc.ui.presentation.niveltanque.viewModel.NivelTanqueV
 import com.dflch.dashboardemc.ui.presentation.turbiedad.view.TurbiedadPlanta01Screen
 import com.dflch.dashboardemc.ui.presentation.turbiedad.view.TurbiedadPlanta02Screen
 import com.dflch.dashboardemc.ui.presentation.turbiedad.view.TurbiedadScreen
+import com.dflch.dashboardemc.ui.presentation.turbiedad.viewModel.TurbiedadTanquesViewModel
 import com.dflch.dashboardemc.ui.presentation.turbiedad.viewModel.TurbiedadViewModel
 
 @Composable
@@ -22,8 +23,7 @@ fun ScreenContainer(
     networkViewModel: NetworkViewModel,
     nivelRioViewModel: NivelRioViewModel,
     turbiedadViewModel: TurbiedadViewModel,
-    turbiedadPlanta01ViewModel: TurbiedadViewModel,
-    turbiedadPlanta02ViewModel: TurbiedadViewModel,
+    turbiedadTanquesViewModel: TurbiedadTanquesViewModel,
     nivelTanqueViewModel: NivelTanqueViewModel
 ){
 
@@ -36,6 +36,7 @@ fun ScreenContainer(
                 networkViewModel,
                 nivelRioViewModel,
                 turbiedadViewModel,
+                turbiedadTanquesViewModel,
                 nivelTanqueViewModel,
                 navHost
             )
@@ -46,15 +47,15 @@ fun ScreenContainer(
         }
 
         composable(NavGraph.Turbiedad.route) {
-            TurbiedadScreen(turbiedadViewModel, navHost)
+            TurbiedadScreen(turbiedadViewModel, turbiedadTanquesViewModel, navHost)
         }
 
         composable(NavGraph.TurbiedadPlanta01.route) {
-            TurbiedadPlanta01Screen(turbiedadPlanta01ViewModel, navHost)
+            TurbiedadPlanta01Screen(turbiedadViewModel, navHost)
         }
 
         composable(NavGraph.TurbiedadPlanta02.route) {
-            TurbiedadPlanta02Screen(turbiedadPlanta01ViewModel, navHost)
+            TurbiedadPlanta02Screen(turbiedadViewModel, navHost)
         }
 
         composable(NavGraph.NivelTanque.route) {

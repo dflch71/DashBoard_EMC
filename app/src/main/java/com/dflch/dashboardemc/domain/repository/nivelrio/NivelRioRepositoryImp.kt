@@ -3,7 +3,7 @@ package com.dflch.dashboardemc.domain.repository.nivelrio
 import com.dflch.dashboardemc.data.remote.api.nivelrio.NivelRioApiService
 import com.dflch.dashboardemc.data.remote.mappers.toDomainModel
 import com.dflch.dashboardemc.data.remote.mappers.toDomainModelList
-import com.dflch.dashboardemc.domain.model.nivelrio.LecturasPlantas
+import com.dflch.dashboardemc.domain.model.lecturas.LecturasPlantas
 import java.net.SocketTimeoutException
 import javax.inject.Inject
 import javax.inject.Singleton

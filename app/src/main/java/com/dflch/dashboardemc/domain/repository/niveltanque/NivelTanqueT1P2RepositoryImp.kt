@@ -2,7 +2,7 @@ package com.dflch.dashboardemc.domain.repository.niveltanque
 
 import com.dflch.dashboardemc.data.remote.api.niveltanque.NivelTanqueT1P2ApiService
 import com.dflch.dashboardemc.data.remote.mappers.toDomainModelList
-import com.dflch.dashboardemc.domain.model.nivelrio.LecturasPlantas
+import com.dflch.dashboardemc.domain.model.lecturas.LecturasPlantas
 import java.net.SocketTimeoutException
 import javax.inject.Inject
 import javax.inject.Singleton
