@@ -28,6 +28,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.dflch.dashboardemc.R
 import com.dflch.dashboardemc.domain.model.lecturas.LecturasPlantas
 import com.dflch.dashboardemc.ui.presentation.nivelRio.view.component.AlertDialogNivelRio
@@ -42,6 +43,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun NivelRioScreen(
     nivelRioViewModel: NivelRioViewModel
+
 ) {
     val uiState by nivelRioViewModel.uiState.collectAsState()
     var isChangeGraph by remember { mutableStateOf(true) }
@@ -103,6 +105,7 @@ fun NivelRioScreen(
                                     )
                                 }
 
+                                /*
                                 IconButton(
                                     onClick = { isChangeGraph = !isChangeGraph },
                                     modifier = Modifier
@@ -117,6 +120,7 @@ fun NivelRioScreen(
                                         contentDescription = null
                                     )
                                 }
+                                */
                             }
                         }
 

@@ -50,7 +50,7 @@ fun NivelRioGrafNivel(niveles: List<LecturasPlantas>) {
                     Line(
                         label = "Cauce", //909.50
                         values = listOf(909.50, 909.50, 900.50, 900.50, 909.50, 909.50),
-                        color = SolidColor(Color(0XFFFF795548)),
+                        color = SolidColor(Color(0XFF795548)),
                         firstGradientFillColor = Color(0xFFFF80AB).copy(alpha = .5f),
                         drawStyle = DrawStyle.Stroke(width = 2.dp),
                     ),
@@ -74,7 +74,7 @@ fun NivelRioGrafNivel(niveles: List<LecturasPlantas>) {
                     ),
 
                     Line(
-                        label = "Naranja\n(908.52)", //908.52 - 909.49
+                        label = "Naranja\n(908.52+)", //908.52 - 909.49
                         values = listOf(908.52, 908.52, 908.52, 908.52, 908.52, 908.52,),
                         color =  SolidColor(Color(0xFFFFA500)),
                         //firstGradientFillColor = Color(0xFFFFEE58).copy(alpha = .05f),
@@ -92,7 +92,7 @@ fun NivelRioGrafNivel(niveles: List<LecturasPlantas>) {
                     ),
 
                     Line(
-                        label = "Amarilla\n(907.52)", //900.00 - 908.51
+                        label = "Amarilla\n(907.52+)", //900.00 - 908.51
                         values = listOf(907.52, 907.52, 907.52, 907.52, 907.52, 907.52,),
                         color = SolidColor(Color.Yellow),
                         //firstGradientFillColor = Color(0xFF2BC0A1).copy(alpha = .5f),

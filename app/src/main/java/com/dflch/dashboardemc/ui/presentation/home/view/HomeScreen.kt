@@ -42,11 +42,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.dflch.dashboardemc.R
 import com.dflch.dashboardemc.ui.components.BottomNavigationBar
-import com.dflch.dashboardemc.ui.presentation.niveltanque.view.NivelTanqueScreen
+import com.dflch.dashboardemc.ui.presentation.niveltanque.view.NivelTanqueT1P1Screen
 import com.dflch.dashboardemc.ui.presentation.irca.view.IrcaScreen
 import com.dflch.dashboardemc.ui.presentation.network.viewmodel.NetworkViewModel
 import com.dflch.dashboardemc.ui.presentation.nivelRio.view.NivelRioScreen
 import com.dflch.dashboardemc.ui.presentation.nivelRio.viewmodel.NivelRioViewModel
+import com.dflch.dashboardemc.ui.presentation.niveltanque.view.NivelTanqueScreen
 import com.dflch.dashboardemc.ui.presentation.niveltanque.viewModel.NivelTanqueViewModel
 import com.dflch.dashboardemc.ui.presentation.turbiedad.view.TurbiedadScreen
 import com.dflch.dashboardemc.ui.presentation.turbiedad.viewModel.TurbiedadTanquesViewModel
@@ -122,7 +123,7 @@ fun HomeScreen(
                 when (selectedItemIndex) {
                     0 -> { NivelRioScreen(nivelRioViewModel) }
                     1 -> { TurbiedadScreen(turbiedadViewModel, turbiedadTanquesViewModel, navController) }
-                    2 -> { NivelTanqueScreen(nivelTanqueViewModel) }
+                    2 -> { NivelTanqueScreen(nivelTanqueViewModel, navController) }
                     3 -> { IrcaScreen() }
                 }
             }

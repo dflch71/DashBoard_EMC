@@ -63,6 +63,7 @@ fun TurbiedadGraf(turbiedadP1: List<LecturasPlantas>) {
                 .padding(horizontal = 22.dp),
             data = remember {
                 listOf(
+                    /*
                     Line(
                         label = "Roja (6000+)", //909.50
                         values = listOf(0.0),
@@ -86,6 +87,7 @@ fun TurbiedadGraf(turbiedadP1: List<LecturasPlantas>) {
                         //firstGradientFillColor = Color(0xFF2BC0A1).copy(alpha = .5f),
                         //drawStyle = DrawStyle.Stroke(width = 2.dp)
                     ),
+                    */
 
                     Line(
                         label = "Turbiedad UNT",

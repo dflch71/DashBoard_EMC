@@ -17,8 +17,10 @@ import ir.ehsannarmani.compose_charts.ColumnChart
 import ir.ehsannarmani.compose_charts.models.AnimationMode
 import ir.ehsannarmani.compose_charts.models.BarProperties
 import ir.ehsannarmani.compose_charts.models.Bars
+import ir.ehsannarmani.compose_charts.models.DrawStyle
 import ir.ehsannarmani.compose_charts.models.GridProperties
 import ir.ehsannarmani.compose_charts.models.PopupProperties
+import ir.ehsannarmani.compose_charts.models.StrokeStyle
 
 @Composable
 fun TurbiedadGrafColumn(turbiedadP1: List<LecturasPlantas>) {
@@ -49,26 +51,32 @@ fun TurbiedadGrafColumn(turbiedadP1: List<LecturasPlantas>) {
                                 //label = horas[horas.size-1],
                                 label = turbiedadP1[0].lectura.toString()+" UNT",
                                 value = turbiedadLectura[horas.size-1],
-                                color = SolidColor(Color(0xFF2596be))
+                                color = SolidColor(Color(0xFFAED581))
                             ),
 
                             Bars.Data( label ="         ", value = 0.0, color = SolidColor(Color.Transparent)),
 
                             Bars.Data(
-                                label = "Amarilla (4000)",
+                                label = "Normal (< 4K)",
                                 value = 4000.00,
+                                color = SolidColor(Color(0xFFAED581)),
+                            ),
+
+                            Bars.Data(
+                                label = "Amarilla (4K-5K)",
+                                value = 5000.00,
                                 color = SolidColor(Color.Yellow)
                             ),
 
                             Bars.Data(
-                                label = "Naranja (5000)",
-                                value = 5000.00,
+                                label = "Naranja (5K-6K)",
+                                value = 6000.00,
                                 color = SolidColor(Color(0xFFFFA500))
                             ),
 
                             Bars.Data(
-                                label = "Roja (6000+)",
-                                value = 6000.00,
+                                label = "Roja (6K +)",
+                                value = 7000.00,
                                 color = SolidColor(Color.Red)
                             ),
 
@@ -81,7 +89,7 @@ fun TurbiedadGrafColumn(turbiedadP1: List<LecturasPlantas>) {
             barProperties = BarProperties(
                 spacing = 10.dp,
                 thickness = 20.dp,
-                cornerRadius = Bars.Data.Radius.Circular(5.dp),
+                cornerRadius = Bars.Data.Radius.Circular(5.dp)
             ),
 
             animationMode = AnimationMode.Together(delayBuilder = { it * 500L }),

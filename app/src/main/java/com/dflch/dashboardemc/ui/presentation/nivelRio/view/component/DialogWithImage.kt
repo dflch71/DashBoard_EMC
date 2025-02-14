@@ -18,6 +18,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -32,17 +33,21 @@ fun DialogWithImage(
     onConfirmation: () -> Unit,
     fecha: String,
     nivel: String,
+    nivelAmarilla: String,
     alertaAmarilla: String,
+    nivelNaranja: String,
     alertaNaranja: String,
+    nivelRoja: String,
     alertaRoja: String,
 ) {
+
     Dialog(onDismissRequest = { onDismissRequest() }) {
         // Draw a rectangle shape with rounded corners inside the dialog
         Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(375.dp)
-                .padding(16.dp),
+                .padding(8.dp),
             shape = RoundedCornerShape(16.dp),
         ) {
             Column(
@@ -79,7 +84,7 @@ fun DialogWithImage(
 
                 Row(
                     modifier = Modifier
-                        .padding(start = 24.dp, end = 24.dp, bottom = 12.dp)
+                        .padding(start = 16.dp, end = 8.dp, bottom = 12.dp)
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center,
                 ) {
@@ -97,23 +102,36 @@ fun DialogWithImage(
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Normal,
                         textAlign = TextAlign.Start,
-                        modifier = Modifier.padding(start = 16.dp, end = 16.dp)
-                            .width(70.dp),
+                        modifier = Modifier
+                            .padding(start = 16.dp, end = 8.dp)
+                            .width(65.dp),
+                    )
+
+                    Text(
+                        text = nivelAmarilla,
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Normal,
+                        textAlign = TextAlign.Start,
+                        modifier = Modifier
+                            .padding(start = 8.dp, end = 8.dp)
+                            .width(50.dp),
                     )
 
                     Text(
                         text = alertaAmarilla,
                         style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.Normal,
+                        color = Color.DarkGray,
+                        fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Start,
-                        modifier = Modifier.padding(start = 16.dp, end = 16.dp)
-                            .width(100.dp),
+                        modifier = Modifier
+                            .padding(start = 8.dp, end = 8.dp)
+                            .width(70.dp),
                     )
                 }
 
                 Row(
                     modifier = Modifier
-                        .padding(start = 24.dp, end = 24.dp, bottom = 12.dp)
+                        .padding(start = 16.dp, end = 8.dp, bottom = 12.dp)
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center,
                 ) {
@@ -121,7 +139,8 @@ fun DialogWithImage(
                         painter = painterResource(id = R.drawable.orange),
                         contentDescription = "Descripción de la imagen",
                         contentScale = ContentScale.Fit,
-                        modifier = Modifier.width(24.dp)
+                        modifier = Modifier
+                            .width(24.dp)
                             .align(alignment = Alignment.CenterVertically),
                     )
 
@@ -130,23 +149,36 @@ fun DialogWithImage(
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Normal,
                         textAlign = TextAlign.Start,
-                        modifier = Modifier.padding(start = 16.dp, end = 16.dp)
-                            .width(70.dp),
+                        modifier = Modifier
+                            .padding(start = 16.dp, end = 8.dp)
+                            .width(65.dp),
+                    )
+
+                    Text(
+                        text = nivelNaranja,
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Normal,
+                        textAlign = TextAlign.Start,
+                        modifier = Modifier
+                            .padding(start = 8.dp, end = 8.dp)
+                            .width(50.dp),
                     )
 
                     Text(
                         text = alertaNaranja,
                         style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.Normal,
+                        color = Color.DarkGray,
+                        fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Start,
-                        modifier = Modifier.padding(start = 16.dp, end = 16.dp)
-                            .width(100.dp),
+                        modifier = Modifier
+                            .padding(start = 8.dp, end = 8.dp)
+                            .width(70.dp),
                     )
                 }
 
                 Row(
                     modifier = Modifier
-                        .padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
+                        .padding(start = 16.dp, end = 8.dp, bottom = 12.dp)
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center,
                 ) {
@@ -154,7 +186,8 @@ fun DialogWithImage(
                         painter = painterResource(id = R.drawable.red),
                         contentDescription = "Descripción de la imagen",
                         contentScale = ContentScale.Fit,
-                        modifier = Modifier.width(24.dp)
+                        modifier = Modifier
+                            .width(24.dp)
                             .align(alignment = Alignment.CenterVertically),
                     )
 
@@ -163,17 +196,30 @@ fun DialogWithImage(
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Normal,
                         textAlign = TextAlign.Start,
-                        modifier = Modifier.padding(start = 16.dp, end = 16.dp)
-                            .width(70.dp),
+                        modifier = Modifier
+                            .padding(start = 16.dp, end = 8.dp)
+                            .width(65.dp),
+                    )
+
+                    Text(
+                        text = nivelRoja,
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Normal,
+                        textAlign = TextAlign.Start,
+                        modifier = Modifier
+                            .padding(start = 8.dp, end = 8.dp)
+                            .width(50.dp),
                     )
 
                     Text(
                         text = alertaRoja,
                         style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.Normal,
+                        color = Color.DarkGray,
+                        fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Start,
-                        modifier = Modifier.padding(start = 16.dp, end = 16.dp)
-                            .width(100.dp),
+                        modifier = Modifier
+                            .padding(start = 8.dp, end = 8.dp)
+                            .width(70.dp),
                     )
                 }
 
@@ -184,18 +230,13 @@ fun DialogWithImage(
                 ) {
                     TextButton(
                         onClick = { onDismissRequest() },
-                        modifier = Modifier
-                            .padding(start = 80.dp)
+                        modifier = Modifier.padding(start = 100.dp)
+                    ) { Text("") }
 
-                    ) {
-                        Text("")
-                    }
                     TextButton(
                         onClick = { onConfirmation() },
                         modifier = Modifier.padding(8.dp),
-                    ) {
-                        Text("OK")
-                    }
+                    ) { Text("OK") }
                 }
             }
         }

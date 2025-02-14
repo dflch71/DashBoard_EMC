@@ -3,8 +3,10 @@ package com.dflch.dashboardemc.core.utils
 import android.os.Build
 import androidx.annotation.RequiresApi
 import java.text.SimpleDateFormat
+import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.Calendar
 import java.util.Date
@@ -112,6 +114,49 @@ class Utility {
             }
         }
 
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun calcularDiferenciaTiempo(fechaStr: String): String {
+            // Mapeo de nombres de meses en español a números
+            val meses = mapOf(
+                "ene" to "01", "feb" to "02", "mar" to "03", "abr" to "04",
+                "may" to "05", "jun" to "06", "jul" to "07", "ago" to "08",
+                "sep" to "09", "oct" to "10", "nov" to "11", "dic" to "12"
+            )
 
+            // Extraemos el mes abreviado (primeros 3 caracteres)
+            val mesAbreviado = fechaStr.substring(0, 3).lowercase()
+
+            // Reemplazamos el mes en español por su número
+            val fechaNumerica = if (mesAbreviado in meses) {
+                fechaStr.replaceFirst(mesAbreviado, meses[mesAbreviado]!!)
+            } else {
+                return "Error: Formato de fecha incorrecto"
+            }
+
+            // Formato correcto de la fecha después del reemplazo
+            val formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm")
+
+            // Convertir el string a LocalDateTime
+            val fechaIngresada = LocalDateTime.parse(fechaNumerica, formatter)
+
+            // Obtener la fecha y hora actual
+            val ahora = LocalDateTime.now()
+
+            // Calcular la diferencia entre ambas fechas
+            val diferencia = Duration.between(fechaIngresada, ahora)
+
+            // Extraer días, horas y minutos
+            val dias = diferencia.toDays()
+            val horas = diferencia.toHours() % 24
+            val minutos = diferencia.toMinutes() % 60
+
+            // Construir el resultado legible
+            val resultado = StringBuilder()
+            if (dias > 0) resultado.append("$dias días ")
+            if (horas > 0) resultado.append("$horas horas ")
+            if (minutos > 0) resultado.append("$minutos minutos")
+
+            return resultado.toString().trim()
+        }
     }
 }

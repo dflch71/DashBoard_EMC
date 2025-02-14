@@ -53,9 +53,12 @@ fun NivelRioContent(niveles: List<LecturasPlantas>) {
             onConfirmation = { showDialog = false },
             fecha = (toUpperCase(datePart?.toString() ?: "Fecha") + " - " + timePart?.toString()),
             nivel = selectedNivel!!.lectura.toString(),
+            nivelAmarilla = "907.52",
             alertaAmarilla = String.format("%.2f", alertaAmarilla) + " Mts ",
+            nivelNaranja = "908.52",
             alertaNaranja = String.format("%.2f", alertaNaranja) + " Mts ",
-            alertaRoja = String.format("%.2f", alertaRoja) + " Mts "
+            nivelRoja = "909.50",
+            alertaRoja = String.format("%.2f", alertaRoja) + " Mts ",
         )
     }
 }

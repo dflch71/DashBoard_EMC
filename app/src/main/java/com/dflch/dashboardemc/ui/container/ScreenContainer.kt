@@ -1,15 +1,18 @@
 package com.dflch.dashboardemc.ui.container
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.NavHostController
-import com.dflch.dashboardemc.ui.presentation.niveltanque.view.NivelTanqueScreen
 import com.dflch.dashboardemc.ui.presentation.home.view.HomeScreen
 import com.dflch.dashboardemc.ui.presentation.irca.view.IrcaScreen
 import com.dflch.dashboardemc.ui.presentation.network.viewmodel.NetworkViewModel
 import com.dflch.dashboardemc.ui.presentation.nivelRio.view.NivelRioScreen
 import com.dflch.dashboardemc.ui.presentation.nivelRio.viewmodel.NivelRioViewModel
+import com.dflch.dashboardemc.ui.presentation.niveltanque.view.NivelTanqueScreen
+import com.dflch.dashboardemc.ui.presentation.niveltanque.view.NivelTanqueT1P1Screen
+import com.dflch.dashboardemc.ui.presentation.niveltanque.view.NivelTanqueT1P2Screen
+import com.dflch.dashboardemc.ui.presentation.niveltanque.view.NivelTanqueT2P2Screen
 import com.dflch.dashboardemc.ui.presentation.niveltanque.viewModel.NivelTanqueViewModel
 import com.dflch.dashboardemc.ui.presentation.turbiedad.view.TurbiedadPlanta01Screen
 import com.dflch.dashboardemc.ui.presentation.turbiedad.view.TurbiedadPlanta02Screen
@@ -24,7 +27,7 @@ fun ScreenContainer(
     nivelRioViewModel: NivelRioViewModel,
     turbiedadViewModel: TurbiedadViewModel,
     turbiedadTanquesViewModel: TurbiedadTanquesViewModel,
-    nivelTanqueViewModel: NivelTanqueViewModel
+    nivelTanqueViewModel: NivelTanqueViewModel,
 ){
 
     NavHost(
@@ -59,8 +62,21 @@ fun ScreenContainer(
         }
 
         composable(NavGraph.NivelTanque.route) {
-            NivelTanqueScreen(nivelTanqueViewModel)
+            NivelTanqueScreen(nivelTanqueViewModel, navHost)
         }
+
+        composable(NavGraph.NivelTanqueT1P1.route) {
+            NivelTanqueT1P1Screen(nivelTanqueViewModel, navHost)
+        }
+
+        composable(NavGraph.NivelTanqueT1P2.route) {
+            NivelTanqueT1P2Screen(nivelTanqueViewModel, navHost)
+        }
+
+        composable(NavGraph.NivelTanqueT2P2.route) {
+            NivelTanqueT2P2Screen(nivelTanqueViewModel, navHost)
+        }
+
 
         composable(NavGraph.Irca.route) {
             IrcaScreen()
