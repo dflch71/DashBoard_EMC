@@ -2,6 +2,7 @@ package com.dflch.dashboardemc.core.utils
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.time.Duration
 import java.time.LocalDate
@@ -158,5 +159,6 @@ class Utility {
 
             return resultado.toString().trim()
         }
+
     }
 }

@@ -49,7 +49,7 @@ fun NivelRioGrafNivel(niveles: List<LecturasPlantas>) {
 
                     Line(
                         label = "Cauce", //909.50
-                        values = listOf(909.50, 909.50, 900.50, 900.50, 909.50, 909.50),
+                        values = listOf(909.50, 909.50, 905.10, 905.10, 909.50, 909.50),
                         color = SolidColor(Color(0XFF795548)),
                         firstGradientFillColor = Color(0xFFFF80AB).copy(alpha = .5f),
                         drawStyle = DrawStyle.Stroke(width = 2.dp),
@@ -129,8 +129,8 @@ fun NivelRioGrafNivel(niveles: List<LecturasPlantas>) {
                 )
             },
 
-            minValue = 900.00,
-            maxValue = 915.00,
+            minValue = 905.00,
+            maxValue = 911.00,
 
             animationMode = AnimationMode.Together(delayBuilder = { it * 500L }),
             popupProperties = PopupProperties(

@@ -1,5 +1,5 @@
 [versions]
-agp = "8.8.1"
+agp = "8.9.1"
 composeCharts = "0.0.19"
 converterGson = "2.9.0"
 gson = "2.10.1"
@@ -10,19 +10,20 @@ junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 kotlinxDatetime = "0.5.0"
 lifecycleRuntimeKtx = "2.8.7"
-activityCompose = "1.10.0"
-composeBom = "2025.01.01"
+activityCompose = "1.10.1"
+composeBom = "2025.02.00"
 hilt = "2.52"
 coil = "2.7.0"
 loggingInterceptor = "4.10.0"
-navigationCompose = "2.8.6"
+navigationCompose = "2.8.8"
 ksp = "2.0.20-1.0.25"
 retrofit = "2.9.0"
-runtimeLivedata = "1.7.7"
+runtimeLivedata = "1.7.8"
 
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata", version.ref = "runtimeLivedata" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }

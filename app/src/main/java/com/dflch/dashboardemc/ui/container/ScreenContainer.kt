@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.dflch.dashboardemc.ui.presentation.home.view.HomeScreen
 import com.dflch.dashboardemc.ui.presentation.irca.view.IrcaScreen
+import com.dflch.dashboardemc.ui.presentation.irca.viewmodel.IrcaViewModel
 import com.dflch.dashboardemc.ui.presentation.network.viewmodel.NetworkViewModel
 import com.dflch.dashboardemc.ui.presentation.nivelRio.view.NivelRioScreen
 import com.dflch.dashboardemc.ui.presentation.nivelRio.viewmodel.NivelRioViewModel
@@ -28,6 +29,7 @@ fun ScreenContainer(
     turbiedadViewModel: TurbiedadViewModel,
     turbiedadTanquesViewModel: TurbiedadTanquesViewModel,
     nivelTanqueViewModel: NivelTanqueViewModel,
+    ircaViewModel: IrcaViewModel
 ){
 
     NavHost(
@@ -41,6 +43,7 @@ fun ScreenContainer(
                 turbiedadViewModel,
                 turbiedadTanquesViewModel,
                 nivelTanqueViewModel,
+                ircaViewModel,
                 navHost
             )
         }
@@ -79,7 +82,7 @@ fun ScreenContainer(
 
 
         composable(NavGraph.Irca.route) {
-            IrcaScreen()
+            IrcaScreen(ircaViewModel)
         }
 
 

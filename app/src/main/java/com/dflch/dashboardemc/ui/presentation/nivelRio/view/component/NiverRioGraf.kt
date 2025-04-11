@@ -107,8 +107,11 @@ fun NivelRioGraf(niveles: List<LecturasPlantas>) {
                 )
             },
 
-            minValue = 901.00,
-            maxValue = 915.00,
+            //minValue = 901.00,
+            //maxValue = 915.00,
+
+            minValue = 905.00,
+            maxValue = 911.00,
 
             animationMode = AnimationMode.Together(delayBuilder = { it * 500L }),
             popupProperties = PopupProperties(

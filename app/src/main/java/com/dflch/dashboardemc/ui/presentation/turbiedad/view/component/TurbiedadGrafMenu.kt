@@ -5,10 +5,13 @@ import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Switch
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
@@ -52,6 +55,66 @@ fun TurbiedadGrafMenu(turbiedadP1: List<LecturasPlantas>) {
         }
     }
 
+    val horasStates: List<MutableState<String>> = remember {
+        horas.map { hora ->
+            mutableStateOf(hora ?: "") // If hora is null, use an empty string
+        }
+    }
+
+    // Helper function for safe indexing
+    fun getHoraState(index: Int): MutableState<String> {
+        return if (index < horasStates.size) {
+            horasStates[index]
+        } else {
+            mutableStateOf("") // Return a default empty state if out of bounds
+        }
+    }
+
+    // Safely access the values:
+    var hora01 by getHoraState(0)
+    var hora02 by getHoraState(1)
+    var hora03 by getHoraState(2)
+    var hora04 by getHoraState(3)
+    var hora05 by getHoraState(4)
+    var hora06 by getHoraState(5)
+
+    val turbiedadLecturaStates: List<MutableState<Double>> = remember {
+        turbiedadLectura.map { lectura ->
+            mutableStateOf(lectura ?: 0.0) // If lectura is null, use 0.0
+        }
+    }
+
+    // Helper function for safe indexing
+    fun getLecturaState(index: Int): MutableState<Double> {
+        return if (index < turbiedadLectura.size) {
+            turbiedadLecturaStates[index]
+        } else {
+            mutableStateOf(0.0) // Return a default empty state if out of bounds
+        }
+    }
+
+    val turbiedad1 by getLecturaState(0)
+    val turbiedad2 by getLecturaState(1)
+    val turbiedad3 by getLecturaState(2)
+    val turbiedad4 by getLecturaState(3)
+    val turbiedad5 by getLecturaState(4)
+    val turbiedad6 by getLecturaState(5)
+
+    /*
+    val horasState = remember { List(horas.size) {
+        mutableStateOf(horas.getOrNull(it) ?: "")
+    }}
+
+    val hora01 by remember { mutableStateOf(horasState[0] )}
+    val hora02 by remember { mutableStateOf(horasState[1] )}
+    val hora03 by remember { mutableStateOf(horasState[2] )}
+    val hora04 by remember { mutableStateOf(horasState[3] )}
+    val hora05 by remember { mutableStateOf(horasState[4] )}
+    val hora06 by remember { mutableStateOf(horasState[5] )}
+
+    */
+
+    /*
     val hora01 : String by remember { mutableStateOf(horas[0] ?: "")}
     val hora02 : String by remember { mutableStateOf(horas[1] ?: "")}
     val hora03 : String by remember { mutableStateOf(horas[2] ?: "")}
@@ -59,12 +122,29 @@ fun TurbiedadGrafMenu(turbiedadP1: List<LecturasPlantas>) {
     val hora05 : String by remember { mutableStateOf(horas[4] ?: "")}
     val hora06 : String by remember { mutableStateOf(horas[5] ?: "")}
 
+ */
+/*
+    val turbiedadLecturaState = remember { List(turbiedadLectura.size) {
+      mutableStateOf( turbiedadLectura.getOrNull(it) ?: 0.0 )
+    }}
+
+    val turbiedad1 by remember { mutableStateOf(turbiedadLecturaState[0])}
+    val turbiedad2  by remember { mutableStateOf(turbiedadLecturaState[1])}
+    val turbiedad3  by remember { mutableStateOf(turbiedadLecturaState[2])}
+    val turbiedad4  by remember { mutableStateOf(turbiedadLecturaState[3])}
+    val turbiedad5  by remember { mutableStateOf(turbiedadLecturaState[4])}
+    val turbiedad6  by remember { mutableStateOf(turbiedadLecturaState[5])}
+*/
+
+/*
     val turbiedad1 : Double by remember { mutableStateOf(turbiedadLectura[0] ?: 0.0)}
     val turbiedad2 : Double by remember { mutableStateOf(turbiedadLectura[1] ?: 0.0)}
     val turbiedad3 : Double by remember { mutableStateOf(turbiedadLectura[2] ?: 0.0)}
     val turbiedad4 : Double by remember { mutableStateOf(turbiedadLectura[3] ?: 0.0)}
     val turbiedad5 : Double by remember { mutableStateOf(turbiedadLectura[4] ?: 0.0)}
     val turbiedad6 : Double by remember { mutableStateOf(turbiedadLectura[5] ?: 0.0)}
+
+ */
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -89,27 +169,27 @@ fun TurbiedadGrafMenu(turbiedadP1: List<LecturasPlantas>) {
             data = remember {
                 listOf(
                     Bars(
-                        label = hora06,
+                        label = hora06.toString(),
                         values = listOf(Bars.Data(value = turbiedad6, color = SolidColor(Color(0xFFe1bee7)) ))
                     ),
                     Bars(
-                        label = hora05,
+                        label = hora05.toString(),
                         values = listOf(Bars.Data(value = turbiedad5, color = SolidColor(Color(0xFFce93d8)) ))
                     ),
                     Bars(
-                        label = hora04,
+                        label = hora04.toString(),
                         values = listOf(Bars.Data(value = turbiedad4, color = SolidColor(Color(0xFFba68c8)) ))
                     ),
                     Bars(
-                        label = hora03,
+                        label = hora03.toString(),
                         values = listOf(Bars.Data(value = turbiedad3, color = SolidColor(Color(0xFFab47bc)) ))
                     ),
                     Bars(
-                        label = hora02,
+                        label = hora02.toString(),
                         values = listOf(Bars.Data(value = turbiedad2, color = SolidColor(Color(0xFF9c27b0)) ))
                     ),
                     Bars(
-                        label = hora01,
+                        label = hora01.toString(),
                         values = listOf(Bars.Data(value = turbiedad1, color = SolidColor(Color(0xFF6a1b9a)) ))
                     ),
                 )

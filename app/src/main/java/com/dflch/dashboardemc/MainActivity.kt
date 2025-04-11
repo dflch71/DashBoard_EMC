@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.dflch.dashboardemc.ui.container.ScreenContainer
+import com.dflch.dashboardemc.ui.presentation.irca.viewmodel.IrcaViewModel
 import com.dflch.dashboardemc.ui.presentation.network.viewmodel.NetworkViewModel
 import com.dflch.dashboardemc.ui.presentation.nivelRio.viewmodel.NivelRioViewModel
 import com.dflch.dashboardemc.ui.presentation.niveltanque.viewModel.NivelTanqueViewModel
@@ -28,7 +29,7 @@ class MainActivity : ComponentActivity(
     private val turbiedadViewModel: TurbiedadViewModel by viewModels()
     private val turbiedadTanquesViewModel: TurbiedadTanquesViewModel by viewModels()
     private val nivelTanqueViewModel: NivelTanqueViewModel by viewModels()
-    //private val ircaViewModel: IrcaViewModel by viewModels()
+    private val ircaViewModel: IrcaViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +45,8 @@ class MainActivity : ComponentActivity(
                     nivelRioViewModel,
                     turbiedadViewModel,
                     turbiedadTanquesViewModel,
-                    nivelTanqueViewModel
+                    nivelTanqueViewModel,
+                    ircaViewModel
                 )
             }
         }

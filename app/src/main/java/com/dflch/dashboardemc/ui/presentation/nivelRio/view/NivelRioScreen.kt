@@ -39,11 +39,9 @@ import com.dflch.dashboardemc.ui.presentation.nivelRio.viewmodel.NivelRioViewMod
 import com.dflch.dashboardemc.ui.presentation.nivelRio.viewmodel.UiState
 import kotlinx.coroutines.delay
 
-
 @Composable
 fun NivelRioScreen(
     nivelRioViewModel: NivelRioViewModel
-
 ) {
     val uiState by nivelRioViewModel.uiState.collectAsState()
     var isChangeGraph by remember { mutableStateOf(true) }

@@ -28,4 +28,10 @@ object Constants {
     const val GET_PATH_AGUA_TRATADA_NIVEL_TANQUE1_P2 = "historicoLecturas/1/41/9/2"
     const val GET_PATH_AGUA_TRATADA_NIVEL_TANQUE2_P2 = "historicoLecturas/1/40/9/2"
 
+    //IRCA
+    //https://intranet.emcartago.com/api/lab/Samples/datairca?InitialDate=2025-02-01&EndDate=2025-02-28
+    var MEDICIONES_IRCA = "https://intranet.emcartago.com/api/lab/Samples/"
+    //const val GET_PATH_IRCA = "datairca?InitialDate=FechaIni&EndDate=FechaFin"
+    const val GET_PATH_IRCA = "datairca?"
+
 }

@@ -34,14 +34,17 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
     @Singleton
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    @Named("mediciones")
+    fun provideRetrofit(@Named("mediciones") okHttpClient: OkHttpClient): Retrofit {
         return Retrofit
             .Builder()
             .baseUrl(MEDICIONES_URL)
@@ -52,6 +55,7 @@ object AppModule {
 
     @Provides
     @Singleton
+    @Named("mediciones")
     fun provideOkHttpclient(authInterceptor: AuthInterceptor): OkHttpClient {
 
         val interceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -71,7 +75,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): NivelRioApiService = retrofit.create(NivelRioApiService::class.java)
+    fun provideApiService(@Named("mediciones") retrofit: Retrofit): NivelRioApiService = retrofit.create(NivelRioApiService::class.java)
 
 
     @Provides
@@ -82,7 +86,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideApiServiceTurbiedadP1(retrofit: Retrofit): TurbiedadP1ApiService = retrofit.create(TurbiedadP1ApiService::class.java)
+    fun provideApiServiceTurbiedadP1(@Named("mediciones") retrofit: Retrofit): TurbiedadP1ApiService = retrofit.create(TurbiedadP1ApiService::class.java)
 
 
     @Provides
@@ -93,7 +97,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideApiServiceTurbiedadTanquesP1(retrofit: Retrofit): TurbiedadTanqueP1ApiService = retrofit.create(TurbiedadTanqueP1ApiService::class.java)
+    fun provideApiServiceTurbiedadTanquesP1(@Named("mediciones") retrofit: Retrofit): TurbiedadTanqueP1ApiService = retrofit.create(TurbiedadTanqueP1ApiService::class.java)
 
     @Provides
     @Singleton
@@ -103,7 +107,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideApiServiceTurbiedadTanquesP2(retrofit: Retrofit): TurbiedadTanqueP2ApiService = retrofit.create(TurbiedadTanqueP2ApiService::class.java)
+    fun provideApiServiceTurbiedadTanquesP2(@Named("mediciones") retrofit: Retrofit): TurbiedadTanqueP2ApiService = retrofit.create(TurbiedadTanqueP2ApiService::class.java)
 
 
     @Provides
@@ -114,7 +118,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideApiServiceTurbiedadP2(retrofit: Retrofit): TurbiedadP2ApiService = retrofit.create(
+    fun provideApiServiceTurbiedadP2(@Named("mediciones") retrofit: Retrofit): TurbiedadP2ApiService = retrofit.create(
         TurbiedadP2ApiService::class.java)
 
     @Provides
@@ -125,7 +129,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideApiServiceNivelTanqueT1P1(retrofit: Retrofit): NivelTanqueT1P1ApiService = retrofit.create(
+    fun provideApiServiceNivelTanqueT1P1(@Named("mediciones") retrofit: Retrofit): NivelTanqueT1P1ApiService = retrofit.create(
         NivelTanqueT1P1ApiService::class.java)
 
     @Provides
@@ -136,7 +140,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideApiServiceNivelTanqueT1P2(retrofit: Retrofit): NivelTanqueT1P2ApiService = retrofit.create(
+    fun provideApiServiceNivelTanqueT1P2(@Named("mediciones") retrofit: Retrofit): NivelTanqueT1P2ApiService = retrofit.create(
         NivelTanqueT1P2ApiService::class.java)
 
     @Provides
@@ -147,7 +151,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideApiServiceNivelTanqueT2P2(retrofit: Retrofit): NivelTanqueT2P2ApiService = retrofit.create(
+    fun provideApiServiceNivelTanqueT2P2(@Named("mediciones") retrofit: Retrofit): NivelTanqueT2P2ApiService = retrofit.create(
         NivelTanqueT2P2ApiService::class.java)
 
 }
